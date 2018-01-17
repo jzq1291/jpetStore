@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+	http://www.springframework.org/schema/context 
+	http://www.springframework.org/schema/context/spring-context-2.5.xsd
+	http://www.springframework.org/schema/aop
+	http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+	http://www.springframework.org/schema/tx
+	http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+
+	<!-- 使用注解实现IOC -->
+	<context:component-scan base-package="*" />
+ 
+
+	<aop:aspectj-autoproxy proxy-target-class="true" />
+	
+	<!-- 配置数据源 -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+		<property name="url"
+			value="jdbc:mysql://localhost:3306/jpetstore?characterEncoding=UTF-8">
+		</property>
+		<property name="username" value="root"></property>
+		<property name="password" value=""></property>
+		
+	</bean>
+
+	<!-- 配置sessionFactory，注解实现 -->
+	<bean name="sessionFactory"
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">
+					org.hibernate.dialect.MySQLDialect
+				</prop>
+				<prop key="hibernate.show_sql">true</prop>
+			</props>
+		</property>
+		<!-- 扫描指定包下所有的有注解的实体类 -->
+		<property name="packagesToScan">
+			<list>
+				<value>com.clps.vo</value>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- 配置spring事务管理器 -->
+	<bean name="transactionManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+
+	<!-- 配置事务通知,用于配置不同的方法如何去使用事务 -->
+	<tx:advice id="transactionAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="get*" read-only="true" />
+			<tx:method name="insert*" propagation="REQUIRED" />
+			<tx:method name="*" propagation="REQUIRED" isolation="DEFAULT" />
+		</tx:attributes>
+	</tx:advice>
+	
+	
+	<!-- 配置aop事务管理 -->
+	
+	<aop:config>
+		<aop:pointcut expression="execution(public * service..*.*(..))"
+			id="txPointcut" />
+		<aop:advisor advice-ref="transactionAdvice" pointcut-ref="txPointcut" />
+	</aop:config>
+
+</beans>
+
+
