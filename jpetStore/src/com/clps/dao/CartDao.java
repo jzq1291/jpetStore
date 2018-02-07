@@ -18,7 +18,7 @@ public interface CartDao {
 	 * @date   2018年1月30日 下午2:42:30
 	 * @param  cart 购物车
 	 */
-//	public void save(Cart cart);
+	public void save(Cart cart);
 	
 	
 	/**
