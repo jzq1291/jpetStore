@@ -100,6 +100,15 @@ a.Button, a.Button:link, a.Button:visited {
   font-size: 1.5ex;
 }
 
+.Button1{
+  padding: .3ex;
+  color: #fff;
+  background-color:#708090;
+  text-decoration: none;
+  font-family: helvetica, tahoma, arial, verdana, sans-serif;
+  font-size: 1.5ex;
+}
+
 a.Button:hover {
   color: #000;
   background-color: #54c07a;
@@ -287,10 +296,7 @@ body>#Banner {
   background:white ;
   text-align:center;
   display:block;
-  height:740px;
-
- 
-
+  min-height: 700px;
 }
 
 #Catalog input[type="submit"]{
