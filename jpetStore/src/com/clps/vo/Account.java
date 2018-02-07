@@ -4,11 +4,10 @@ package com.clps.vo;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+@SuppressWarnings("serial")
 @Entity
 @Table(name = "account", catalog = "jpetStore")
 public class Account implements java.io.Serializable {

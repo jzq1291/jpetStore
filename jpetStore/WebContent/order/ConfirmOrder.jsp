@@ -8,9 +8,7 @@
 	
 		$("a").click(function(){
 		
-			
 				alert("123");
-		
 		})
 		
 	})
@@ -35,81 +33,80 @@
     账单地址
     </th></tr>
     <tr><td>
-    姓名:</td><td>	<s:property value="account.firstname"/>
+    姓:</td><td> ${account.firstname }
     </td></tr>
     <tr><td>
-      姓:</td><td>	<s:property value="account.firstname"/> 
+      名:</td><td>	${account.lastname } 
     </td></tr>
     <tr><td>
-      地址 1:</td><td><s:property value="account.addr1"/>
+      地址 1:</td><td>${account.addr1 }
     </td></tr>
     <tr><td>
-      地址 2:</td><td><s:property value="account.addr1"/>    </td></tr>
+      地址 2:</td><td>${account.addr2 }    </td></tr>
     <tr><td>
-      城市: </td><td>	<s:property value="account.city"/>
+      城市: </td><td>	${account.city }
     </td></tr>
     <tr><td>
-      州 、邦:</td><td><s:property value="account.state"/> 
+      州 、邦:</td><td>${account.state } 
     </td></tr>
     <tr><td>
-     邮政编号:</td><td><s:property value="account.zip"/>
+     邮政编号:</td><td>${account.zip }
     </td></tr>
     <tr><td>
-      国家: </td><td><s:property value="account.country"/> 
+      国家: </td><td>${account.country } 
     </td></tr>
     <tr><th colspan="2">
   寄运地址
     </th></tr><tr><td>
-    姓名:</td><td><s:property value="account.firstname"/>
+    姓:</td><td>${account.firstname }
   </td></tr>
     <tr><td>
-      姓:</td><td><s:property value="account.firstname"/>
+      名:</td><td>${account.lastname }
     </td></tr>
     <tr><td>
-     地址1:</td><td><s:property value="account.addr1"/> 
+     地址1:</td><td>${account.addr1 }
     </td></tr>
     <tr><td>
-      地址 2:</td><td><s:property value="account.addr1"/>
+      地址 2:</td><td>${account.addr2 }
     </td></tr>
     <tr><td>
-   城市: </td><td><s:property value="account.city"/> 
+   城市: </td><td>${account.city }
     </td></tr>
     <tr><td>
-      州、邦:</td><td><s:property value="account.state"/>
+      州、邦:</td><td>${account.state }
     </td></tr>
     <tr><td>
-     邮政编码:</td><td><s:property value="account.zip"/> 
+     邮政编码:</td><td>${account.zip }
     </td></tr>
     <tr><td>
-     国家: </td><td><s:property value="account.country"/> 
+     国家: </td><td>${account.country }
     </td></tr>
 
   </table>
-  
  
-  
-    <form action="saveOrderAction?signon.userid=${userid }" method="post">
-  			<input type="hidden" name="account.firstname"  value="<s:property value="account.firstname" />" />
-  			<input type="hidden" name="orders.shipaddr1" value="<s:property value="account.addr1" />" />
-  			<input type="hidden" name="orders.shipcity" value="<s:property value="account.city" />" />
-  			<input type="hidden" name="orders.shipzip" value="<s:property value="account.zip" />" />
-  			<input type="hidden" name="orders.shipcountry" value="<s:property value="account.country" />" />
+    <form action="saveOrderAction" method = "post">
+  			<input type="hidden" name="account.firstname"  value = "${account.firstname }" />
+  			<input type="hidden" name="account.firstname"  value = "${account.firstname }" />
+  			<input type="hidden" name="orders.shipaddr1" value = "${account.addr1 }" />
+  			<input type="hidden" name="orders.shipcity" value = "${account.city }" />
+  			<input type="hidden" name="orders.shipzip" value = "${account.zip }" />
+  			<input type="hidden" name="orders.shipcountry" value = "${account.country }" />
   			
-  			<input type="hidden" name="orders.billaddr1" value="<s:property value="account.addr1" />" />
-  			<input type="hidden" name="orders.billcity" value="<s:property value="account.city" />" />
-  			<input type="hidden" name="orders.courier" value="顺丰速运" />
-  			<input type="hidden" name="orders.billcountry" value="<s:property value="account.country" />" />
-  			<input type="hidden" name="orders.billstate" value="<s:property value="account.state" />" />
-  			<input type="hidden" name="orders.billzip" value="<s:property value="account.zip" />" />
-  			<input type="hidden" name="orders.billtofirstname"  value="<s:property value="account.firstname" />" />
+  			<input type="hidden" name="orders.billaddr1" value = "${account.addr1 }" />
+  			<input type="hidden" name="orders.billcity" value = "${account.city }"/>
+  			<input type="hidden" name="orders.courier" value = "顺丰速运" />
+  			<input type="hidden" name="orders.billcountry" value = "${account.country }" />
+  			<input type="hidden" name="orders.billstate" value="${account.state }" />
+  			<input type="hidden" name="orders.billzip" value="${account.zip }" />
+  			<input type="hidden" name="orders.billtofirstname"  value="${account.firstname }"/>
+  			<input type="hidden" name="orders.billtolastname"  value="${account.lastname }"/>
   			<input type="hidden" name="orders.totalprice"  value="111111" />
-  			<input type="hidden" name="orders.shiptofirstname"  value="<s:property value="account.firstname" />" />
+  			<input type="hidden" name="orders.shiptofirstname"  value="${account.firstname }"/>
+  			<input type="hidden" name="orders.shiptolastname"  value="${account.lastname }"/>
   			<input type="hidden" name="orders.creditcard"  value="9999 9999 999999" />
   			<input type="hidden" name="orders.exprdate"  value="12/03" />
   			<input type="hidden" name="orders.cardtype"  value="美国运通信用卡" />
   			<input type="hidden" name="orders.shipstate"  value="22" />
-  			
-  			
   			
   			<input type="submit" value="确认" >
   </form>

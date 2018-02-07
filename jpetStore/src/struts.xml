@@ -6,26 +6,123 @@
 	<constant name="objectFactory" value="spring"></constant>
     <package name="default" namespace="/" extends="json-default,struts-default">
 		
+		<!-- 登录 -->
 		<action name="loginAction" class="loginAction" method="login">
 			<result name="success" type="json" >
 			</result>
 			<result name="input">/common/Error.jsp</result>
 		</action>
 		
+		<!-- 登出 -->
 		<action name="dropUserAction" class="loginAction" method="drop">
 			<result name="success" type="redirect">/account/SignonForm.jsp</result>
 			<result name="input">/common/Error.jsp</result>
 		</action>
 		
+		<!-- 注册 -->
 		<action name="insertAction" class="accountAction" method="insertAction">
 			<result name="success">/account/RegiestSuccess.jsp</result>
 			<result name="input">/common/Error.jsp</result>
 		</action>
 		
+		<!-- 查询用户信息 -->
+		<action name="queryInfoByUserAction" class="accountAction" method="queryInfoByUser">
+			<result name="success">/account/EditAccountForm.jsp</result>
+			<result name="error"></result>
+		</action>
+		
+		<!-- 通过商品种类查询商品 -->
 		<action name="queryProductByCategory" class="productAction" method="queryProductByCategory">
 			<result name="success">/catalog/Category.jsp</result>			
 			<result name="input">/common/Error.jsp</result>
 		</action>
+		
+		<!-- 通过商品查找物品 -->
+		<action name="queryItemAction" class="itemAction" method="queryItemByProduct">
+			<result name="success">/catalog/Product.jsp</result>			
+			<result name="input">/common/Error.jsp</result>
+		</action>
+		
+		<!-- 物品详情 -->
+		<action name="queryQtyAction" class="itemAction" method="getItemDetail">
+			<result name="success">/catalog/Item.jsp</result>
+			<result name="input">/common/Error.jsp</result>
+		</action>
+		
+		
+		<!-- 添加到购物车 -->
+		<action name="saveShoppingAction" class="shoppingCartAction" method="save">
+			<result name="success" type="redirect">/cart/Cart.jsp</result>
+			<result name="input">/common/Error.jsp</result>
+		</action>
+		
+		<!-- 添加到购物车 -->
+		<action name="saveShoppingAction1" class="shoppingCartAction" method="save">
+			<result name="success" type="json" >
+			</result>
+			<result name="input">/common/Error.jsp</result>
+		</action>
+		
+		
+		<!-- 为购物车项添加物品件数 -->
+		<action name="shoppingCartAdd" class="shoppingCartAction" method="add">
+			<result name="success" type="json" >
+			</result>
+			<result name="input">/common/Error.jsp</result>
+		</action>
+		
+		<!-- 为购物车项减少物品件数 -->
+		<action name="shoppingCartSub" class="shoppingCartAction" method="sub">
+			<result name="success" type="json" >
+			</result>
+			<result name="input">/common/Error.jsp</result>
+		</action>
+		
+		<!-- 移除购物车项 -->
+		<action name="shoppingCartRemove" class="shoppingCartAction" method="remove">
+			<result name="success" type="json" >
+			</result>
+			<result name="input">/common/Error.jsp</result>
+		</action>
+		
+		<!-- 修改购物车数量 -->
+		<action name="shoppingCartModify" class="shoppingCartAction" method="modify">
+			<result name="success" type="json" >
+			</result>
+			<result name="input">/common/Error.jsp</result>
+		</action>	
+		
+		<!-- 检查库存 -->
+		<action name="checkInventory" class="inventoryAction" method="checkInventory">
+			<result name="success" type="json" >
+			</result>
+			<result name="input">/common/Error.jsp</result>
+		</action>
+		
+		
+		<!-- 底部广告()IncludeButtom 自动调用 -->
+		<action name="queryBannerdataAction" class="loginAction" method="queryBannerdataAction">
+			<result name="success" type="json" ></result>
+			<result name="input">/common/Error.jsp</result>
+		</action>
+		
+		
+		
+		<!-- 订单部分 -->
+		
+		<!-- Checkout订单后continue查询账户信息  -->
+		<action name="queryAccountAction" class="ordersAction" method="queryAccount">
+			<result name="success">/order/NewOrderForm.jsp</result>
+			<result name="error"></result>
+		</action>
+		
+		
+		<!-- 保存订单 -->
+		<action name="saveOrderAction" class="ordersAction" method="saveOrder">
+			<result name="success">/order/ViewOrder.jsp</result>
+			<result name="error"></result>
+		</action>
+		
 		
 	</package>
 </struts>

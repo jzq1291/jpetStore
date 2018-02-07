@@ -1,125 +1,218 @@
 
 <%@ page language="java" import="java.util.*,com.domain.*,java.lang.Integer" pageEncoding="UTF-8"%>
 
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ include file="../common/IncludeTop.jsp" %>
 <%@ taglib uri="/struts-tags" prefix="s" %>
 <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
 <script type="text/javascript">
 
-	$(function(){
 
-		$(".textview").bind({
-			focus:function(){
-				console.log($(this).parent().parent().children().children().first().html());
-				console.log($(this).val());
-			},
-			blur:function(){
-			
-				var param = "item.itemid=" + $(this).parent().parent().children().children().first().html() + "&item.count=" + $(this).val() + "&signon.userid=0";
-				console.log(param);
-				$.ajax({
-					url:"saveCountAction",
-					data:param,
-					type:"GET",
-					dataType:"json"
-				})
-			}
+	$(function(){
+		var rowCount;
 		
-		});
-		
-		$(".textviewtwo").bind({
-			focus:function(){
-				console.log($(this).parent().parent().children().children().first().html());
-				console.log($(this).val());
-			},
-			blur:function(){
-				var param = "item.itemid=" + $(this).parent().parent().children().children().first().html() + "&item.count=" + $(this).val() + "&signon.userid=" + "${userid }" + 
-							"&item.listprice=" + $(this).parent().parent().children().eq(5).html();
-				console.log(param);
-				$.ajax({
-					url:"saveCountAction.action",
-					data:param,
-					type:"GET",
-					dataType:"json",
-					success:function(data){
-						console.log(data.sumPrice);
-						//$(this).parent().parent().children().eq(6).html(data.sumPrice);
-					},
-					error:function(){
-					
-					}
-				})
-				
-				var price = $(this).parent().parent().children().eq(5).html();
-				var sumprice = $(this).parent().parent().children().eq(6).html();
-				var count = $(this).val();
-				$(this).parent().parent().children().eq(6).html(price * count);
-	
-			}
-		
-		});
-		
-		
-		
-		$(".btnTwo").click(function(){
-			alert($(this).parent().parent().children().children().first().html());
-			location.href = "deleteShoppingAction?signon.userid=" + "${userid }"+ "&item.itemid=" + $(this).parent().parent().children().children().first().html();
-		});
-		
-		$(".btnOne").click(function(){
-			
-			location.href = "deleteShoppingAction?item.itemid=" + $(this).parent().parent().children().children().first().html() + "&signon.userid=0";
-	
-			
-		});
-		
-		var sum = 0;
+		//计算总价
 		$(".sumprice").each(function(){
-				var price = $(this).parent().parent().children().eq(5).html();
-				var sumprice = $(this).parent().parent().children().eq(6).html();
-				var count = $(this).parent().parent().children().eq(4).children().val();
+				var price = $(this).parent().parent().children().eq(7).html();
+				var sumprice = $(this).parent().parent().children().eq(8).html();
+				var count = $(this).parent().parent().children().eq(5).children().val();
+// 				var count = $(this).parent().parent().children().eq(5).html();
 				$(this).html(price * count);
-				var countPirce = parseInt($(this).html());
 			
-				sum = sum + countPirce;
 		})
 		
-		
-		$(".sumpriceTwo").each(function(){
-				var price = $(this).parent().parent().children().eq(5).html();
-				var sumprice = $(this).parent().parent().children().eq(6).html();
-				var count = $(this).parent().parent().children().eq(4).children().val();
-				$(this).html(price * count);
-				var countPirce = parseInt($(this).html());
-			
-				sum = sum + countPirce;
-			
-		})
-		$("#maxprice").html(sum);
-		
-		$(".textviewtwo").parent().parent().children().find("a").click(function(){
-			if($(this).html() != "取消" ){
-				location.href="queryQtyAction?item.itemid=" + $(this).html();
-			}
-		});
-		
-		
+		//结算 ,如果没登录则跳转到登录页面
 		$("#buy").click(function(){
 			 if("${userid }" == ""){
 			 	location.href="account/SignonForm.jsp";
 			 }else{
-				location.href="queryShoppingTwoAction?signon.userid=" + "${userid }";
+				location.href="cart/Checkout.jsp";
 			}
 		})
 		
+		
+		//是否展示底部广告
 		if("${profile.mylistopt}" == 0){
 			$("#MyList").css("display","none");
-		
 		}
+
 		
-	});
-	
+		//查看物品详情
+		$(".itemId").click(function(){
+			location.href = "queryQtyAction?item.itemid=" + $(this).html();
+		});
+		
+		
+		//增加数量
+		$(".add").click(function(){
+			var itemId = $(this).parent().children().eq(0).children().html();
+			var count = $(this).parent().children().eq(5).children().val();
+			
+			//更新购物车
+		    var td = $(this);
+			var price = $(this).parent().children().eq(7).html();
+		    var maxprice = $("#maxprice");
+		    var sumprice = $(this).parent().children().eq(8).children();
+
+			$.ajax({
+				url:"shoppingCartAdd",
+				data:{
+					"itemId":itemId,
+					"count":count
+				},
+				dataType:"json",
+				type:"post",
+				success:function(data){
+					
+					if(data.res == 1){
+						td.parent().children().eq(5).children().val(parseInt(count)+1);
+						maxprice.html((maxprice.html()*1)+(price*1));
+						sumprice.html((sumprice.html()*1)+(price*1));
+					}
+					alert(data.result);
+				},
+				error:function(d){
+					alert(d.responseText);
+				}
+			});
+		});
+		
+		
+		//减少数量
+		$(".sub").click(function(){
+			var itemId = $(this).parent().children().eq(0).children().html();
+			var count = $(this).parent().children().eq(5).children().val();
+			
+			//更新购物车
+		    var td = $(this);
+			var price = $(this).parent().children().eq(7).html();
+		    var maxprice = $("#maxprice");
+		    var sumprice = $(this).parent().children().eq(8).children();
+			
+			$.ajax({
+				url:"shoppingCartSub",
+				data:{
+					"itemId":itemId
+				},
+				dataType:"json",
+				type:"post",
+				success:function(data){
+					if(data.res == 1){
+						//如果数量大于一减一,否则移除
+						if((count*1)>1){
+							td.parent().children().eq(5).children().val((count*1)-1);
+						}else {
+							td.parent().remove()
+						}
+						maxprice.html((maxprice.html()*1)-(price*1));
+						sumprice.html((sumprice.html()*1)-(price*1));
+					}
+					alert(data.result);
+				},
+				error:function(d){
+					alert(d.responseText);
+				}
+			});
+			
+		});
+		
+		
+		//获取焦点时,保存获取前的数量
+		$(".textview").focus(function(){
+			rowCount = $(this).val();
+		});
+
+		
+		//修改数量
+		$(".textview").blur(function() {
+			var itemId = $(this).parent().parent().children().eq(0).children().html();
+			var count = $(this).val();
+			var input=$(this);
+				
+			if(count == 0){
+				alert("数量最少为1");
+				input.val(rowCount);
+				return;
+			}else if(count == rowCount){
+				return;
+			}
+				
+			//更新购物车
+			var td = $(this);
+			var price = $(this).parent().parent().children().eq(7).html();
+			var maxprice = $("#maxprice");
+			var sumprice = $(this).parent().parent().children().eq(8).children();
+				
+			$.ajax({
+				url:"shoppingCartModify",
+				data:{
+					"itemId":itemId,
+					"count" :count,
+					"rowCount":rowCount
+				},
+				dataType:"json",
+				type:"post",
+				success:function(data){
+					if(data.res == 1){
+						maxprice.html((maxprice.html()*1)-(price*((rowCount*1)-(count*1))));
+						sumprice.html((sumprice.html()*1)-(price*((rowCount*1)-(count*1))));
+						alert(data.result);
+					}else{
+						input.val(rowCount);
+						alert(data.result);
+					}
+				},
+				error:function(d){
+					alert(d.responseText);
+				}
+			});
+				
+		});
+		
+		
+		//删除购物车项
+		$(".btn").click(function(){
+			var itemId = $(this).parent().parent().children().children().first().html();
+			var count = $(this).parent().parent().children().eq(5).children().val();
+			var maxprice = $("#maxprice");
+			var sumprice = $(this).parent().parent().children().eq(8).children().html();
+			
+			alert(maxprice.html()*1);
+			alert(sumprice*1);
+			
+			var tr = $(this).parents('tr:first');
+			$.ajax({
+				url:"shoppingCartRemove",
+				data:{
+					"itemId":itemId,
+					"count":count
+				},
+				dataType:"json",
+				type:"post",
+				success:function(data){
+					if(data.res == 1){
+						maxprice.html((maxprice.html()*1)-(sumprice*1));
+						tr.remove()
+					}
+					alert(data.result);
+				},
+				error:function(d){
+					alert(d.responseText);
+				}
+			});
+		});
+		
+		
+		/*  付款  */
+		$("#buy").click(function(){
+			 if("${userid }" == ""){
+			 	location.href="account/SignonForm.jsp";
+			 }else{
+				location.href="cart/Checkout.jsp";
+			}
+		})
+			
+	})
 	
 </script>
 
@@ -136,102 +229,52 @@
       <table id="shopping">
         <tr>
           <th><b>商品编号</b></th>  <th><b>产品编号</b></th>  <th><b>产品描述</b></th> <th><b>有库存?</b></th>
-          <th><b>产品数量</b></th>  <th><b>定价</b></th> <th><b>总成本</b></th>  <th>&nbsp;</th>
+          <th colspan="3"><b>产品数量</b></th>  <th><b>定价</b></th> <th><b>总价</b></th>  <th>&nbsp;</th>
         </tr>
-
-   
-         
-        <%
-        	if(session.getAttribute("userid")==null){
-        %>	
-        <%
-        
-		List<Item> itemlist = (List<Item>)session.getAttribute("itemlist");
-		if(itemlist == null){
 		
-		%>
-		<tr><td colspan="8"><b>你的购物车是空的.</b></td></tr>
-		<% 
-		
-		}else{
-		
-		
+		<c:if test="${myCart==null }">
+				<tr><td colspan="8"><b>你的购物车是空的.</b></td></tr>
+			</c:if>
 			
-		%>
-		  <s:iterator value="itemMap" id="column">
-	    	<tr>
-	            <td><a href="javascript:void(0)"><s:property value="value.itemid"/></a></td>
-	            <td><s:property value="value.product.productid"/></td>
-		        <td><s:property value="value.attr1"/></td>
-		        <td>有</td>
-              	<td><input type="text" class="textview" name="inStock" size="5" value="<s:property value="value.count"/>"/> </td>
-	            <td><s:property value="value.listprice"/></td>
-	            <td>$<span class="sumpriceTwo"></span></td>
-	            <td><a  class="btnOne" href="javascript:void(0)">
-	              取消</a></td>
-	    		
-	    	</tr>
-    		
-    	</s:iterator>
-		<%
-
-		}
-		%> 
-        <%	
-        	}else{	
-        %>  
-        <s:iterator value="listcart" var="cart">
-		    	<tr>
-		    	
-		            <td><a href="javascript:void(0)"><s:property value="#cart.item.itemid"/></a></td>
-		            <td><s:property value="#cart.item.product.productid"/></td>
-		            <td><s:property value="#cart.item.attr1"/></td>
-		            <td>有</td>
-		            <td><input type="text" name="inStock" class="textviewtwo" size="5" value="<s:property value="#cart.quantity"/>"/> </td>
-		            <td><s:property value="#cart.item.listprice"/> 	</td>
-		            <td>$<span class="sumprice"></span></td>
-		            <td><a class="btnTwo" href="javascript:void(0)">取消</a></td>
-        
-		    		
-		    	</tr>
-    		
-    	</s:iterator>
-        <%	
-        } 
-      	   
-        %>
-        
-       
+			<c:if test="${sessionScope.myCart!=null }"> 
+				<c:forEach items="${sessionScope.myCart.items }" var="it">
+			    	<tr>
+			            <td><a class="itemId" href="javascript:void(0)">${it.item.itemid }</a></td>
+			            <td>${it.item.productid }</td>
+				        <td>${it.item.attr1 }</td>
+				        <td>有</td>
+				        <td class="sub">-</td>
+		              	<td style="background: white; text-align: center;">
+		              		<input type="text" class="textview" size="1" style="text-align: center; " value="${it.quantity }"/> 
+		              	</td>
+				        <td class="add">+</td>
+			            <td>${it.item.listprice }</td>
+			            <td>$<span class="sumprice"></span></td>
+			            <td><a  class="btn" href="javascript:void(0)">
+			         	     取消</a></td>
+			    	</tr>
+			    </c:forEach>	
+		</c:if>
         <tr>
-          <td colspan="7">
-            总金额:$ <span id="maxprice">0000</span>
-            <input type="submit" name="update" value="更新购物车" class="Button" />
-
+          <td colspan="9">
+           	 总金额:$ <span id="maxprice">${myCart.total }</span>
           </td>
           <td>&nbsp;</td>
         </tr>
       </table>
       
-          
-        <a class="Button" href="queryShoppingAction?begin=${begin-1 }&signon.userid=${userid }">&lt;&lt; 上一页</a>
-      
-      
-        <a class="Button" href="queryShoppingAction?begin=${begin+1 }&signon.userid=${userid }">下一页 &gt;&gt;</a>
-
-
     </form>
 
-  <a class="Button" id="buy" href="javascript:void(0)" >付款</a>
+    <a class="Button" id="buy" href="javascript:void(0)" >付款</a>
 
 
   </div>
     <div id="MyList" style="margin-top:10px;">
-    <%@ include file="IncludeMyList.jsp" %>
+   		 <%@ include file="IncludeMyList.jsp" %>
     </div>
   <div id="Separator">&nbsp;</div>
 
 </div>
-
 
 
 <%@ include file="../common/IncludeBottom.jsp" %>

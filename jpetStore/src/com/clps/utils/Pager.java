@@ -1,24 +1,28 @@
 package com.clps.utils;
 
 import java.util.List;
+
+
+/**
+ * pageBean  用于数据的分页
+ * @author bill
+ * @date   2018年1月30日 下午3:19:09
+ */
 public class Pager {
 
-	private int page;//当前页
-	private int size;//条数
-	private int totalpage;//总页数
-
-	@SuppressWarnings("rawtypes")
-	private List list;//列表
+	private int page;      //当前页
+	private int size;      //条数
+	private int totalpage; //总页数
+	private List list;     //数据集
 	
 	public Pager() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Pager(int page, int size, int totalpage, List list) {
 		super();
 		this.page = page;
-		this.size = size;
+		this.size = page;
 		this.totalpage = totalpage;
 		this.list = list;
 	}
@@ -57,4 +61,9 @@ public class Pager {
 		this.list = list;
 	}
 
+	@Override
+	public String toString() {
+		return "Pager [page=" + page + ", size=" + size + ", totalpage="
+				+ totalpage + ", list=" + list + "]";
+	}
 }

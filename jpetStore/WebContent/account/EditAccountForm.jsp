@@ -6,27 +6,26 @@
 	<script type="text/javascript">
 		
 			$(function(){
-				$("a").click(function(){
+				$("#").click(function(){
 					
-					location.href = "historyOrdersAction?signon.userid=" + "${userid }";
+					location.href = "historyOrdersAction?signon.username=" + "${userid }";
 				})
 			})
 	</script>
 <div id="Catalog">
 
-<form method="post" action="saveProfileAction">
+<form method="post" action="insertAction">
 
  
 
     <h3>账户信息</h3>
-
-    <table>
+     <table>
       <tr>
-        <td>账户:</td><td><input type="text"  value="<s:property value="signon.userid"/>" name="signon.userid"></td>
+        <td>账户:</td><td><input type="text"  value="${signon.username }" name="signon.username" readonly="readonly"></td>
       </tr><tr>
-      <td>新密码:</td><td><input type="password" value="<s:property value="signon.password"/>" name="signon.password"></td>
-    </tr><tr>
-      <td>重复密码:</td><td><input  type="password" value="<s:property value="signon.password"/>"></td>
+       <td>新密码:</td><td><input type="password" value="${signon.password }" name="signon.password"></td>
+      </tr><tr>
+      <td>重复密码:</td><td><input  type="password" value="${signon.password }"></td>
     </tr>
     </table>
     <%@ include file="IncludeAccountFields.jsp" %>
@@ -36,7 +35,7 @@
 
 
 </form>
-  <a href="javascript:void(0)">我的订单</a>
+  <a id="orderList" href="javascript:void(0)">我的订单</a>
 
 </div>
 

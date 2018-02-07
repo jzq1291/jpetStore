@@ -1,11 +1,5 @@
 package com.clps.action;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-
-import org.apache.struts2.interceptor.ServletRequestAware;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -13,41 +7,49 @@ import org.springframework.stereotype.Controller;
 import com.clps.service.ProductService;
 import com.clps.utils.Pager;
 import com.clps.vo.Category;
-import com.clps.vo.Product;
 import com.opensymphony.xwork2.ActionSupport;
 
+/**
+ * @author bill
+ * @date   2018年1月30日 下午3:14:32
+ */
 @Controller
 @SuppressWarnings("serial")
 @Scope("prototype")
-public class ProductAction extends ActionSupport implements ServletRequestAware{
+public class ProductAction extends ActionSupport{
 	
 	@Autowired
 	private ProductService productorService;
-	private Category category;
 	
+	private Pager pager=new Pager();
+
+	private Category category;  // 商品种类
+	
+	public Pager getPager() {
+		return pager;
+	}
+	public void setPager(Pager pager) {
+		this.pager = pager;
+	}
+
 	public Category getCategory() {
 		return category;
 	}
 	public void setCategory(Category category) {
 		this.category = category;
 	}
-
-	private HttpServletRequest request;
-	private Pager pager=new Pager();
-	List<Product> list=new ArrayList<>();
-	
-	
 		
-	public void setServletRequest(HttpServletRequest request) {
-		this.request=request;
-	}
+	
 
+	
+	/**
+	 * 通过产品种类查询出所有产品
+	 * @author bill
+	 * @date   2018年1月30日 下午3:15:02
+	 * @return
+	 */
 	public String queryProductByCategory(){
-		System.out.println(category);
-		list=productorService.queryProductByCategory(category);
-		System.out.println(list);
-		pager.setList(list);
-		request.setAttribute("pager", pager);
+		pager=productorService.queryProductByCategory(category,pager);
 		return SUCCESS;
 	}
 }

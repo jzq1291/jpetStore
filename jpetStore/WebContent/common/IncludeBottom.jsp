@@ -3,29 +3,27 @@
 <%@ taglib uri="/struts-tags" prefix="s" %>
 <script type="text/javascript" src="js/jquery-1.7.2.js"></script>
 	
+	
 	<script type="text/javascript">
-// 		$(function(){
-<%-- 				var param = "signon.userid=<%=session.getAttribute("userid") %>"; --%>
-// 				console.log(param);
+		$(function(){
 				
-// 				$.ajax({
-// 					url:"queryBannerdataAction",
-// 					data:param,
-// 					dataType:"json",
-// 					type:"POST",
-// 					success:function(data){
-// 						console.log(data.bannerdata.bannername);
-// 						if(data.profile.banneropt == 1){
-// 							$("#Banner").append(data.bannerdata.bannername);
-							
-// 						}
-// 					},
-// 					error:function(){
-					
-// 					}
-// 			})
+				$.ajax({
+					url:"queryBannerdataAction",
+					dataType:"json",
+					type:"POST",
+					success:function(data){
+						if(data){
+							if(data.profile.banneropt == 1){
+								$("#Banner").append(data.bannerdata.bannername);
+							}
+						}
+					},
+					error:function(){
+						
+					}
+			})
 		
-// 		})
+		})
 	
 	</script>
 
