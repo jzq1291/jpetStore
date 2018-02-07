@@ -11,7 +11,12 @@ public class AccountDaoImpl extends BaseHibernateDAO implements AccountDao {
 
 	@Override
 	public void inserAccount(Account account) {
-		this.getHibernateTemplate().save(account);
+		this.getHibernateTemplate().saveOrUpdate(account);
+	}
+
+	@Override
+	public Account getAccountByUserId(String username) {
+		return (Account) getHibernateTemplate().get(Account.class, username);
 	}
 
 }

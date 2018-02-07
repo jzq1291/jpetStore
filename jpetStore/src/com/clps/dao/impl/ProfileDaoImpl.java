@@ -11,7 +11,12 @@ public class ProfileDaoImpl extends BaseHibernateDAO implements ProfileDao {
 
 	@Override
 	public void insertProfile(Profile profile) {
-		this.getHibernateTemplate().save(profile);
+		this.getHibernateTemplate().saveOrUpdate(profile);
+	}
+
+	@Override
+	public Profile getProfileById(String username) {
+		return (Profile) this.getHibernateTemplate().get(Profile.class, username);
 	}
 
 }

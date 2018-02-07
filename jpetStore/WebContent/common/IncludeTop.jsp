@@ -74,18 +74,13 @@
 			
 			$("#account").click(function(){
 				
-				location.href="queryInfoByUserAction?signon.userid=<%=session.getAttribute("userid")%>";
+				location.href="queryInfoByUserAction?signon.username=<%=session.getAttribute("userid")%>";
 			
 			});
 			
 			$("#MenuContent a:first").click(function(){
-			alert("<%=session.getAttribute("userid")%>");
-				if("<%=session.getAttribute("userid")%>" != null){
-					location.href="queryShoppingAction?signon.userid=<%=session.getAttribute("userid")%>";
-							} else {
-								location.href = "/cart/Cart.jsp";
-							}
-						})
+				location.href = "cart/Cart.jsp";
+			})
 		});
 		
 </script>

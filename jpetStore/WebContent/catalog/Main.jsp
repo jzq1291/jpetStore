@@ -15,12 +15,12 @@
 		$("#SidebarContent img").eq(4).attr("title","BIRDS");
 		$("#SidebarContent img").click(function(){
 	
-			location.href="categoryAction?category.catid=" + $(this).attr("title");
+			location.href="queryProductByCategory?category.catid=" + $(this).attr("title");
 			
 		});
 		
-		$("#MainImageContent area").click(function(){
-			location.href="categoryAction?category.catid=" + $(this).attr("alt");
+		$("#MainImageContent map area").click(function(){
+			location.href="queryProductByCategory?category.catid=" + $(this).attr("alt");
 			
 		});
 	
@@ -59,16 +59,15 @@
 
   <div id="MainImage">
     <div id="MainImageContent">
-      <map name="estoremap"><area alt="BIRDS" coords="72,2,280,250" href="javascript:void(0)"
-                                  shape="RECT"/>
-        <area alt="FISH" coords="2,180,72,250" />
-        <area alt="DOGS" coords="60,250,130,320"  shape="RECT"/>
-        <area alt="REPTILES" coords="140,270,210,340" 
-              shape="RECT"/>
-        <area alt="CATS" coords="225,240,295,310"  shape="RECT"/>
+      <map name="estoremap">
         <area alt="BIRDS" coords="280,180,350,250"  shape="RECT"/>
+        <area alt="CATS" coords="225,240,295,310"  shape="RECT"/>
+      	<area alt="BIRDS" coords="72,2,280,250" shape="RECT"/>
+        <area alt="FISH" coords="2,180,72,250" shape="RECT" />
+        <area alt="DOGS" coords="60,250,130,320" shape="RECT"/>
+        <area alt="REPTILES" coords="140,270,210,340" shape="RECT"/>
       </map>
-      <img height="355" src="<%=basePath%>/images/splash.gif" align="center" usemap="#estoremap" width="350"/>
+      <img height="350" src="<%=basePath%>/images/splash.gif" align="center" usemap="#estoremap" width="350"/>
     </div>
   </div>
 

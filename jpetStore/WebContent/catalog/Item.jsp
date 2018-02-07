@@ -8,56 +8,50 @@
 	
 	<script type="text/javascript">
 		$(function(){
-			$("a").click(function(){
 			
-		
-				location.href="saveShoppingAction?item.itemid=<s:property value="item.itemid"/>" + 
-							"&signon.userid=<%=session.getAttribute("userid") %>";
+			$("#Shopping").click(function(){
+				location.href="saveShoppingAction?item.itemid=${item.itemid}";
 			})
-			//$("#itemTable tr td").first().attr("img","<s:property value='item.product.descn'/>");
-			$("#aaa").html("<s:property value='item.product.descn'/>");
-			$("#imagespan").html($("#aaa").text());
+		
+			$("#aaa").html('${product.descn}');
 		})
 		
 	</script>
 
 <div id="Catalog">
 <div id="BackLink">
-<a href="queryItemAction?product.productid=<s:property value="item.product.productid"/>">
-    <s:property value="item.product.name"/></a>
-
+<a href="queryItemAction?product.productid=${product.productid }">
+    ${product.name }</a>
 </div>
   <table id="itemTable">
     
     <tr>
       <td>
-      	<span id="aaa" style="display:none"></span>
-     	<span id="imagespan"></span>
+      	<span id="aaa"></span>
       </td>
     </tr>
     <tr>
       <td>
-        <b><s:property value="item.itemid"/></b>
+        <b>${item.itemid }</b>
       </td>
     </tr><tr>
     <td>
       <b><font size="4">
-      <s:property value="item.attr1"/>
+      	${item.attr1 }
       </font></b>
     </td></tr>
     <tr><td>
-       <s:property value="item.product.name"/>
+       ${product.name }
     </td></tr>
     <tr><td>
-       <s:property value="qty"/>库存。
-    
+       ${qty }库存。
     </td></tr>
     <tr><td>
-    $<s:property value="item.listprice"/>
+    $${item.listprice }
 
     <tr><td>
-      <a class="Button" href="javascript:void(0)">
-       添加到购物车</a>
+      <a id="Shopping" class="Button" href="javascript:void(0)">
+       	添加到购物车</a>
     </td></tr>
     
     

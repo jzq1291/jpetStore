@@ -13,7 +13,12 @@ public class SignonDaoImpl extends BaseHibernateDAO implements SignonDao{
 
 	@Override
 	public void insertSignonDao(Signon signon) {
-		this.getHibernateTemplate().save(signon);
+		this.getHibernateTemplate().saveOrUpdate(signon);
+	}
+
+	@Override
+	public Signon getSignonByUsername(String username) {
+		return (Signon) this.getHibernateTemplate().get(Signon.class, username);
 	}
 
 }

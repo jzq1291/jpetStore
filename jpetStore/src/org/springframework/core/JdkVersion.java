@@ -1,5 +1,12 @@
 package org.springframework.core;
 
+/**
+ * @author bill
+ * 解决异常"are only available on JDK 1.5 and higher"
+ * 替换 spring.jar中的JavaVersion.class
+ * 
+ * */
+
 public abstract class JdkVersion {
     public static final int JAVA_13 = 0;
     public static final int JAVA_14 = 1;

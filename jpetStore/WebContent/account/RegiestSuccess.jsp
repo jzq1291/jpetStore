@@ -7,7 +7,7 @@
 <title>RegiestSuccess</title>
 </head>
 <body>
-	<font style="color: red" size="10px">注册成功!！注册信息如下</font>
+	<font style="color: red" size="4px">保存成功!！账户信息如下</font>
 	<br>用户名:${signon.username }
 	<br>密码：   ${signon.password }
 	<br>姓名：   ${account.firstname } &nbsp ${account.lastname }

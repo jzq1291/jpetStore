@@ -1,11 +1,21 @@
 package com.clps.service;
 
-import java.util.List;
-
+import com.clps.utils.Pager;
 import com.clps.vo.Category;
-import com.clps.vo.Product;
 
 
+/**
+ * @author bill
+ * @date   2018年1月30日 下午2:20:53
+ */
 public interface ProductService {
-	public List<Product> queryProductByCategory(Category category);
+	/**
+	 * 
+	 * @author bill
+	 * @date   2018年1月30日 下午2:20:57
+	 * @param category   种类
+	 * @param pager      
+	 * @return           产品集
+	 */
+	public Pager queryProductByCategory(Category category,Pager pager);
 }

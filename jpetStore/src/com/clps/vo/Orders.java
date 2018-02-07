@@ -135,7 +135,7 @@ public class Orders implements java.io.Serializable {
 		this.userid = userid;
 	}
 
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "orderdate", nullable = false, length = 0)
 	public Date getOrderdate() {
 		return this.orderdate;
@@ -334,7 +334,7 @@ public class Orders implements java.io.Serializable {
 		this.cardtype = cardtype;
 	}
 
-	@Column(name = "locale", nullable = false, length = 80)
+	@Column(name = "locale", nullable = true, length = 80)
 	public String getLocale() {
 		return this.locale;
 	}
@@ -343,4 +343,22 @@ public class Orders implements java.io.Serializable {
 		this.locale = locale;
 	}
 
+	@Override
+	public String toString() {
+		return "Orders [orderid=" + orderid + ", userid=" + userid
+				+ ", orderdate=" + orderdate + ", shipaddr1=" + shipaddr1
+				+ ", shipaddr2=" + shipaddr2 + ", shipcity=" + shipcity
+				+ ", shipstate=" + shipstate + ", shipzip=" + shipzip
+				+ ", shipcountry=" + shipcountry + ", billaddr1=" + billaddr1
+				+ ", billaddr2=" + billaddr2 + ", billcity=" + billcity
+				+ ", billstate=" + billstate + ", billzip=" + billzip
+				+ ", billcountry=" + billcountry + ", courier=" + courier
+				+ ", totalprice=" + totalprice + ", billtofirstname="
+				+ billtofirstname + ", billtolastname=" + billtolastname
+				+ ", shiptofirstname=" + shiptofirstname + ", shiptolastname="
+				+ shiptolastname + ", creditcard=" + creditcard + ", exprdate="
+				+ exprdate + ", cardtype=" + cardtype + ", locale=" + locale
+				+ "]";
+	}
+	
 }

@@ -1,6 +1,5 @@
-
-
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="/struts-tags" prefix="s" %>
 <h3>客户基本信息</h3>
 
@@ -8,15 +7,16 @@
 <script type="text/javascript">
 		$(function(){
 			
-			if("<s:property value="profile.mylistopt"/>" == 1){
+			if("${profile.mylistopt }"){
 				$("#checkboxOne").attr("checked","checked");
 			}
-			if("<s:property value="profile.banneropt"/>" == 1){
+			if("${profile.banneropt}"){
 				$("#checkboxTwo").attr("checked","checked");
 			}
 			
-// 			alert("<s:property value="profile.favcategory"/>");
-			$("#selectlike option[value='<s:property value='profile.favcategory'/>']").attr("selected",true);
+			$("#selectlike option[value='${profile.favcategory }']").attr("selected",true);
+			
+			$("#languagelike option[value='${profile.langpref }']").attr("selected",true);
 						
 		
 		});
@@ -25,26 +25,26 @@
 
 <table id="accountTwoTable">
   <tr>
-    <td>姓:</td><td><input type=text value="<s:property value="account.firstname"/>" name="account.firstname"/></td>
+    <td>姓:</td><td><input type=text value="${account.firstname }" name="account.firstname"/></td>
   </tr><tr>
   <tr>
-    <td>名:</td><td><input type=text value="<s:property value="account.lastname"/>" name="account.lastname"/></td>
+    <td>名:</td><td><input type=text value="${account.lastname }" name="account.lastname"/></td>
   </tr><tr>
-  <td>邮箱:</td><td><input type=text  size="40" value="<s:property value="account.email"/>" name="account.email"></td>
+  <td>邮箱:</td><td><input type=text  size="40" value="${account.email }" name="account.email"></td>
 </tr><tr>
-  <td>联系电话:</td><td><input type=text  size="40" value="<s:property value="account.phone"/>" name="account.phone"/></td>
+  <td>联系电话:</td><td><input type=text  size="40" value="${account.phone }" name="account.phone"/></td>
 </tr><tr>
-  <td>地址1:</td><td><input type=text size="40"  value="<s:property value="account.addr1"/>" name="account.addr1"/></td>
+  <td>地址1:</td><td><input type=text size="40"  value="${account.addr1 }" name="account.addr1"/></td>
 </tr><tr>
   <td>地址2:</td><td><input type=text  size="40" value=""></td>
 </tr><tr>
-  <td>城市:</td><td><input type=text  value="<s:property value="account.city"/>" name="account.city"/></td>
+  <td>城市:</td><td><input type=text  value="${account.city }" name="account.city"/></td>
 </tr><tr>
-  <td>区、县</td><td><input type=text size="4"  value="<s:property value="account.state"/>" name="account.state"/></td>
+  <td>区、县</td><td><input type=text size="4"  value="${account.state }" name="account.state"/></td>
 </tr><tr>
-  <td>邮政编码:</td><td><input type=text size="10" value="<s:property value="account.zip"/>" name="account.zip"/></td>
+  <td>邮政编码:</td><td><input type=text size="10" value="${account.zip }" name="account.zip"/></td>
 </tr><tr>
-  <td>国籍:</td><td><input type=text  size="15" value="<s:property value="account.country"/>" name="account.country"/></td>
+  <td>国籍:</td><td><input type=text  size="15" value="${account.country }" name="account.country"/></td>
 </tr>
 </table>
 
@@ -53,7 +53,7 @@
 <table>
   <tr>
     <td>喜爱的语言:</td><td>
-          <select name="profile.langpref" >
+          <select name="profile.langpref" id="languagelike">
        <option value="ENGLISH">ENGLISH</option>
         <option value="CHINESE">CHINESE</option>
  
