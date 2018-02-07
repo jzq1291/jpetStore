@@ -20,7 +20,9 @@ public interface CartDao {
 	 */
 	public void save(Cart cart);
 	
-	
+	/**
+	 * adadada
+	 * */
 	/**
 	 * 从购物车移除
 	 * @author bill
